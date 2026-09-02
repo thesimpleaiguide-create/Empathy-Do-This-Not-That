@@ -44,7 +44,7 @@
         <div class="text-center space-y-3">
             <h2 class="text-3xl md:text-4xl font-bold text-ttnNavy tracking-tight">Empathy: Do This, Not That</h2>
             <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                Empathy isn't agreement. It isn't cheerfulness either. It's naming what your patient feels, accurately. <span class="font-semibold text-ttnTrustBlue block mt-2">Click a clinician to hear the difference.</span>
+                Empathy isn't agreement. It isn't cheerfulness either. It's naming what your patient feels, accurately. <span class="font-semibold text-ttnTrustBlue block mt-2">Click a card to hear the difference.</span>
             </p>
         </div>
 
@@ -71,10 +71,10 @@
                         onerror="this.onerror=null; this.src='https://placehold.co/800x600/fee2e2/dc2626?text=Clinician+Speaking+(Toxic)';"
                     />
                     
-                    <!-- Play Indicator Overlay -->
-                    <div class="absolute inset-0 bg-ttnNavy/20 group-hover:bg-transparent transition-colors duration-300 z-30 flex items-center justify-center">
-                        <div id="play-icon-toxic" class="w-16 h-16 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-ttnNavy shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <!-- Play Indicator Overlay (Moved to Top Right) -->
+                    <div class="absolute top-4 right-4 z-30 pointer-events-none">
+                        <div id="play-icon-toxic" class="w-12 h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-ttnNavy shadow-md group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         </div>
                     </div>
                 </div>
@@ -120,10 +120,10 @@
                         onerror="this.onerror=null; this.src='https://placehold.co/800x600/dbeafe/005EB8?text=Clinician+Speaking+(Empathetic)';"
                     />
                     
-                    <!-- Play Indicator Overlay -->
-                    <div class="absolute inset-0 bg-ttnNavy/20 group-hover:bg-transparent transition-colors duration-300 z-30 flex items-center justify-center">
-                        <div id="play-icon-valid" class="w-16 h-16 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-ttnNavy shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            <svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <!-- Play Indicator Overlay (Moved to Top Right) -->
+                    <div class="absolute top-4 right-4 z-30 pointer-events-none">
+                        <div id="play-icon-valid" class="w-12 h-12 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-ttnNavy shadow-md group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         </div>
                     </div>
                 </div>
@@ -181,8 +181,8 @@
             document.getElementById('card-valid').classList.remove('card-active', 'ring-4', 'ring-ttnTrustBlue/20', 'border-blue-200');
             
             // Reset play icons
-            document.getElementById('play-icon-toxic').innerHTML = '<svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-            document.getElementById('play-icon-valid').innerHTML = '<svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+            document.getElementById('play-icon-toxic').innerHTML = '<svg class="w-6 h-6 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+            document.getElementById('play-icon-valid').innerHTML = '<svg class="w-6 h-6 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
         }
 
         function playSequence(type) {
@@ -204,7 +204,7 @@
             }
 
             // Change play icon to an equalizer/playing state
-            playIcon.innerHTML = `<svg class="w-8 h-8 text-ttnTrustBlue animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>`;
+            playIcon.innerHTML = `<svg class="w-6 h-6 text-ttnTrustBlue animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>`;
 
             // Start Audio Sequence
             exAudio.play().catch(e => {
@@ -220,7 +220,7 @@
                     linAudio.onended = () => {
                         isPlaying = false;
                         // Return icon to normal
-                        playIcon.innerHTML = '<svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                        playIcon.innerHTML = '<svg class="w-6 h-6 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
                     };
                 }, 800); 
             };
