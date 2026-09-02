@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empathy: Do This, Not That</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ttnNavy: '#0C2340',
+                        ttnTrustBlue: '#005EB8',
+                        ttnActionOrange: '#FE5000',
+                        ttnSlate: '#333F48',
+                        ttnIceBlue: '#DBE2E9'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .card-active .base-img { opacity: 0; }
+        .card-active .active-img { opacity: 1; transform: scale(1.05); }
+        .card-active .content-reveal { opacity: 1; transform: translateY(0); }
+        
+        .content-reveal {
+            opacity: 0.4;
+            transform: translateY(10px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-transparent m-0 p-4 md:p-8 font-sans text-ttnSlate antialiased w-full min-h-screen flex flex-col items-center justify-center">
+
+    <div class="max-w-6xl w-full mx-auto space-y-10">
+        
+        <!-- Header Section -->
+        <div class="text-center space-y-3">
+            <h2 class="text-3xl md:text-4xl font-bold text-ttnNavy tracking-tight">Empathy: Do This, Not That</h2>
+            <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Empathy isn't agreement. It isn't cheerfulness either. It's naming what your patient feels, accurately. <span class="font-semibold text-ttnTrustBlue block mt-2">Click a clinician to hear the difference.</span>
+            </p>
+        </div>
+
+        <!-- Interactive Dual Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 pt-4">
+            
+            <!-- Card 1: Toxic Positivity (Not That) -->
+            <button onclick="playSequence('toxic')" id="card-toxic" class="relative group flex flex-col text-left bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 focus:outline-none">
+                
+                <!-- Image Container -->
+                <div class="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden border-b border-slate-100">
+                    <!-- Base Image (Listening/Neutral) -->
+                    <img 
+                        src="clinician_toxic_base.jpeg" 
+                        alt="Clinician listening" 
+                        class="base-img absolute inset-0 w-full h-full object-cover transition-all duration-700 z-10"
+                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/DBE2E9/0C2340?text=Clinician+Listening+(Neutral)';"
+                    />
+                    <!-- Active Image (Speaking) -->
+                    <img 
+                        src="clinician_toxic_active.jpeg" 
+                        alt="Clinician speaking dismissively" 
+                        class="active-img absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-700 scale-100 z-20"
+                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/fee2e2/dc2626?text=Clinician+Speaking+(Toxic)';"
+                    />
+                    
+                    <!-- Play Indicator Overlay -->
+                    <div class="absolute inset-0 bg-ttnNavy/20 group-hover:bg-transparent transition-colors duration-300 z-30 flex items-center justify-center">
+                        <div id="play-icon-toxic" class="w-16 h-16 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-ttnNavy shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="p-8 md:p-10 flex-grow bg-gradient-to-b from-white to-red-50/30">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </div>
+                        <h3 class="text-sm font-bold text-red-700 uppercase tracking-widest">Not That: Toxic Positivity</h3>
+                    </div>
+                    
+                    <div class="content-reveal space-y-4">
+                        <p class="text-xl md:text-2xl text-slate-800 font-semibold italic leading-snug">
+                            "Don't worry about it, it'll be fine!"
+                        </p>
+                        <div class="w-12 h-1 bg-red-200 rounded-full"></div>
+                        <p class="text-base text-slate-600 leading-relaxed font-medium">
+                            This brushes past the feeling. It sounds supportive, but it lands as dismissive. It shuts the conversation down.
+                        </p>
+                    </div>
+                </div>
+            </button>
+
+            <!-- Card 2: Validating Reflection (Do This) -->
+            <button onclick="playSequence('valid')" id="card-valid" class="relative group flex flex-col text-left bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 focus:outline-none">
+                
+                <!-- Image Container -->
+                <div class="relative w-full aspect-[4/3] bg-slate-100 overflow-hidden border-b border-slate-100">
+                    <!-- Base Image (Listening/Attentive) -->
+                    <img 
+                        src="clinician_valid_base.jpeg" 
+                        alt="Clinician listening attentively" 
+                        class="base-img absolute inset-0 w-full h-full object-cover transition-all duration-700 z-10"
+                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/DBE2E9/0C2340?text=Clinician+Listening+(Attentive)';"
+                    />
+                    <!-- Active Image (Speaking/Empathetic) -->
+                    <img 
+                        src="clinician_valid_active.jpeg" 
+                        alt="Clinician speaking empathetically" 
+                        class="active-img absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-700 scale-100 z-20"
+                        onerror="this.onerror=null; this.src='https://placehold.co/800x600/dbeafe/005EB8?text=Clinician+Speaking+(Empathetic)';"
+                    />
+                    
+                    <!-- Play Indicator Overlay -->
+                    <div class="absolute inset-0 bg-ttnNavy/20 group-hover:bg-transparent transition-colors duration-300 z-30 flex items-center justify-center">
+                        <div id="play-icon-valid" class="w-16 h-16 bg-white/90 backdrop-blur rounded-full flex items-center justify-center text-ttnNavy shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="p-8 md:p-10 flex-grow bg-gradient-to-b from-white to-blue-50/30">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-8 h-8 rounded-full bg-ttnTrustBlue text-white flex items-center justify-center font-bold shadow-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h3 class="text-sm font-bold text-ttnTrustBlue uppercase tracking-widest">Do This: Validating Reflection</h3>
+                    </div>
+                    
+                    <div class="content-reveal space-y-4">
+                        <p class="text-xl md:text-2xl text-ttnNavy font-semibold italic leading-snug">
+                            "This feels like a lot to take on right now."
+                        </p>
+                        <div class="w-12 h-1 bg-ttnIceBlue rounded-full"></div>
+                        <p class="text-base text-slate-600 leading-relaxed font-medium">
+                            This names the feeling. It doesn't agree the feeling should win. It just proves you're actually listening.
+                        </p>
+                    </div>
+                </div>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Hidden Audio Players -->
+    <audio id="audio-example-toxic" src="vo_example_toxic.wav"></audio>
+    <audio id="audio-lindsay-toxic" src="vo_lindsay_toxic.wav"></audio>
+    
+    <audio id="audio-example-valid" src="vo_example_valid.wav"></audio>
+    <audio id="audio-lindsay-valid" src="vo_lindsay_valid.wav"></audio>
+
+    <script>
+        let isPlaying = false;
+        let sequenceTimeout = null;
+
+        function stopAllAudio() {
+            const players = ['audio-example-toxic', 'audio-lindsay-toxic', 'audio-example-valid', 'audio-lindsay-valid'];
+            players.forEach(id => {
+                const player = document.getElementById(id);
+                if (player) {
+                    player.pause();
+                    player.currentTime = 0;
+                    player.onended = null;
+                }
+            });
+            if (sequenceTimeout) clearTimeout(sequenceTimeout);
+        }
+
+        function resetCards() {
+            document.getElementById('card-toxic').classList.remove('card-active', 'ring-4', 'ring-red-500/20', 'border-red-200');
+            document.getElementById('card-valid').classList.remove('card-active', 'ring-4', 'ring-ttnTrustBlue/20', 'border-blue-200');
+            
+            // Reset play icons
+            document.getElementById('play-icon-toxic').innerHTML = '<svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+            document.getElementById('play-icon-valid').innerHTML = '<svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+        }
+
+        function playSequence(type) {
+            if (isPlaying) stopAllAudio();
+            resetCards();
+            isPlaying = true;
+
+            const card = document.getElementById(`card-${type}`);
+            const playIcon = document.getElementById(`play-icon-${type}`);
+            const exAudio = document.getElementById(`audio-example-${type}`);
+            const linAudio = document.getElementById(`audio-lindsay-${type}`);
+
+            // Activate visual state (Image swap & text reveal)
+            card.classList.add('card-active');
+            if(type === 'toxic') {
+                card.classList.add('ring-4', 'ring-red-500/20', 'border-red-200');
+            } else {
+                card.classList.add('ring-4', 'ring-ttnTrustBlue/20', 'border-blue-200');
+            }
+
+            // Change play icon to an equalizer/playing state
+            playIcon.innerHTML = `<svg class="w-8 h-8 text-ttnTrustBlue animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>`;
+
+            // Start Audio Sequence
+            exAudio.play().catch(e => {
+                console.warn("Audio blocked by browser:", e);
+                isPlaying = false;
+            });
+
+            exAudio.onended = () => {
+                // Short natural pause between your voice and Lindsay's voice
+                sequenceTimeout = setTimeout(() => {
+                    linAudio.play();
+                    
+                    linAudio.onended = () => {
+                        isPlaying = false;
+                        // Return icon to normal
+                        playIcon.innerHTML = '<svg class="w-8 h-8 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                    };
+                }, 800); 
+            };
+        }
+    </script>
+</body>
+</html>
